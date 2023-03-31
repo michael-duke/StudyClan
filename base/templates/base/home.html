@@ -4,9 +4,11 @@
 <div>
   <ul>
     {% for room in rooms %}
-    <li style="display: flex;">
-      <h5>{{room.id}} -- </h5>
-      <h3>{{room.name}}</h3>
+    <li style="display: flex">
+      <h5>{{room.id}} --</h5>
+      <h3>
+        <a href="{% url 'room' room.id %}"> {{room.name}} </a>
+      </h3>
     </li>
     {% endfor %}
   </ul>
