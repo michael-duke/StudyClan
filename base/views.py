@@ -9,7 +9,17 @@ rooms = [
 ]
 def home(request):
     context = { 'rooms': rooms}
-    return render(request, 'home.html', context)
+    return render(request, 'base/home.html', context)
 
-def room(request):
-    return render(request, 'room.html')
+def room(request, roomid):
+    room = None
+    for r in rooms:
+        if r['id'] == roomid:
+            room = r
+            break
+    context = { 'room': room}
+    errormsg = { 'error': 'Room not found', 'room': room }
+    if room is None:
+        return render(request, 'base/room.html', errormsg)
+    else:
+        return render(request, 'base/room.html', context)
