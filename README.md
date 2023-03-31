@@ -57,9 +57,9 @@ After you're finished please remove all the comments and instructions!
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 [your_project_name] <a name="about-project"></a>
+# 📖 [StudyClan] <a name="about-project"></a>
 
-**[your_project__name]** is a...
+**[Study Clan]** is a discord inspired group study web app, where developers can meet and chat online, and also create a study plan for a specific topic. The app is built with Django and Django Rest Framework.
 
 ## 🛠 Built With <a name="built-with"></a>
 
