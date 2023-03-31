@@ -2,6 +2,8 @@
 <h1>Home Template</h1>
 
 <div>
+  <h3>Rooms</h3>
+  <a href="{% url 'create-room' %}">Create Room</a>
   <ul>
     {% for room in rooms %}
     <li style="display: flex; align-items: center; column-gap: 2rem">
@@ -13,6 +15,8 @@
         </h3>
       </div>
       <small>{{room.topic.name}}</small>
+      <a style="color:goldenrod" href="{% url 'update-room' room.id%}">EDIT</a>
+      <a style="color:crimson" href="{% url 'delete-room' room.id%}">DEL</a>
     </li>
     {% endfor %}
   </ul>
