@@ -1,0 +1,11 @@
+{% extends 'main.html' %} 
+{% block content %} 
+<h1>Room Template</h1>
+{% if error %}
+<h2>{{error}}</h2>
+{% else %}
+<h2>Room #{{room.id}}</h2>
+<h3>{{room.name}}</h3>
+{% endif %}
+
+{% endblock %}
