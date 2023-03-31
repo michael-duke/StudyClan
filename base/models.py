@@ -3,7 +3,8 @@ from django.db import models
 # Create your models here.
 
 class Room(models.Model):
-    host = models.CharField(max_length=50, unique=True)
+    #host
+    name = models.CharField(max_length=50, unique=True)
     description = models.TextField(null=True, blank=True)
     participants = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
