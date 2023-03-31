@@ -4,11 +4,15 @@
 <div>
   <ul>
     {% for room in rooms %}
-    <li style="display: flex">
-      <h5>{{room.id}} --</h5>
-      <h3>
-        <a href="{% url 'room' room.id %}"> {{room.name}} </a>
-      </h3>
+    <li style="display: flex; align-items: center; column-gap: 2rem">
+      <span style="margin-right: 10px">@{{room.host.username}} </span>
+      <div style="display: flex;">
+        <h5>{{room.id}} --</h5>
+        <h3>
+          <a href="{% url 'room' room.id %}"> {{room.name}} </a>
+        </h3>
+      </div>
+      <small>{{room.topic.name}}</small>
     </li>
     {% endfor %}
   </ul>
