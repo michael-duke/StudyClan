@@ -1,24 +1,34 @@
 {% extends 'main.html' %} {% block content %}
-<h1>Home Template</h1>
-
-<div>
-  <h3>Rooms</h3>
-  <a href="{% url 'create-room' %}">Create Room</a>
-  <ul>
-    {% for room in rooms %}
-    <li style="display: flex; align-items: center; column-gap: 2rem">
-      <span style="margin-right: 10px">@{{room.host.username}} </span>
-      <div style="display: flex;">
-        <h5>{{room.id}} --</h5>
-        <h3>
-          <a href="{% url 'room' room.id %}"> {{room.name}} </a>
-        </h3>
-      </div>
-      <small>{{room.topic.name}}</small>
-      <a style="color:goldenrod" href="{% url 'update-room' room.id%}">EDIT</a>
-      <a style="color:crimson" href="{% url 'delete-room' room.id%}">DEL</a>
-    </li>
+<div class="home-container grid grid-cols-[1fr_3fr]">
+  <div class="topics-container">
+    <h3>Browse Topics</h3>
+    <hr />
+    <a href="{% url 'home'%}">All</a>
+    {% for topic in topics %}
+    <div class="topic">
+      <a href="{% url 'home'%}?q={{topic.name}}">{{topic.name}}</a>
+    </div>
     {% endfor %}
-  </ul>
+  </div>
+  <div>
+    <h5>{{room_count}} rooms available.</h5>
+    <a href="{% url 'create-room' %}">Create Room</a>
+    <ul>
+      {% for room in rooms %}
+      <li style="display: flex; align-items: center; column-gap: 2rem">
+        <span style="margin-right: 10px">@{{room.host.username}} </span>
+        <div style="display: flex">
+          <h5>{{room.id}} --</h5>
+          <h3>
+            <a href="{% url 'room' room.id %}"> {{room.name}} </a>
+          </h3>
+        </div>
+        <small>{{room.topic.name}}</small>
+        <a style="color: goldenrod" href="{% url 'update-room' room.id%}">EDIT</a>
+        <a style="color: crimson" href="{% url 'delete-room' room.id%}">DEL</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
 {% endblock %}
