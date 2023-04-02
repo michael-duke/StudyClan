@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm
 from .models import Room, Topic
 from .forms import RoomForm
 # Create your views here.
@@ -15,12 +16,13 @@ from .forms import RoomForm
 #   { 'id': 3, 'name': 'React Native Developers Assemble' },
 # ]
 def loginPage(request):
+    page = 'login'
     if request.user.is_authenticated:
         messages.info(request, 'You are already logged in')
         return redirect('home')
     
     if request.method == 'POST':
-        username = request.POST.get('username')
+        username = request.POST.get('username').lower()
         password = request.POST.get('password')
 
         try: 
@@ -34,18 +36,36 @@ def loginPage(request):
             return redirect('home')
         else:
             messages.error(request, 'Username or password is incorrect')
-    context = {}
+    context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
 def logoutUser(request):
     logout(request)
     return redirect('home')
 
+def registerPage(request):
+    form = UserCreationForm()
+    if request.user.is_authenticated:
+        messages.info(request, 'You are already logged in')
+        return redirect('home')
+    
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('home')
+        else:
+            messages.error(request, 'An error has occured during registration')
+            return redirect('register')
+    context = {'form': form}
+    return render(request, 'base/login_register.html', context)
 def home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     rooms = Room.objects.filter(Q(topic__name__icontains=q) | Q(name__icontains=q) | Q(description__icontains=q) | Q(host__username__icontains=q))
     room_count = rooms.count()
-    print(rooms)
     topics = Topic.objects.all()
     context = { 'rooms': rooms, 'topics': topics, 'room_count': room_count}
     return render(request, 'base/home.html', context)
