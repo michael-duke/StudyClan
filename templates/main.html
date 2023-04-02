@@ -10,6 +10,13 @@
   </head>
   <body class="bg-gray-50 font-serif leading-normal tracking-normal">
     {% include 'navbar.html' %}
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+{% endif %}
     <div class="container mx-auto">
       {% block content %} 
       {% endblock %}
