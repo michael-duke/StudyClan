@@ -1,3 +1,4 @@
+{% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,14 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StudyClan</title>
+    {% tailwind_css %}
   </head>
-  <body>
-
+  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
     {% include 'navbar.html' %}
-
-    {% block content %}
-
-    {% endblock %}
-
+    <div class="container mx-auto">
+      {% block content %} 
+      {% endblock %}
+    </div>
   </body>
 </html>

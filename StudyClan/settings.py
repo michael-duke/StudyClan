@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'base.apps.BaseConfig',
+    # Third party apps
+    'tailwind',
+    'theme.apps.ThemeConfig',
+    'django_browser_reload',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'StudyClan.urls'
@@ -130,3 +135,14 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Tailwind app config
+TAILWIND_APP_NAME = 'theme'
+
+# Internal IPs
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+# NPM bin path
+NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
