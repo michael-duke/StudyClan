@@ -1,0 +1,15 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>{{user.username}}</h1>
+<div class="profile-container grid grid-cols-[1fr_3fr_1fr]">
+  <div>
+    {% include 'base/topics.html' %}
+  </div>
+  <div>
+    {% include 'base/feed.html' %}
+  </div>
+  <div>
+    {% include 'base/activity.html' %}
+  </div>
+</div>
+{% endblock %}
