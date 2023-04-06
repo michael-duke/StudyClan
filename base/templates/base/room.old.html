@@ -1,0 +1,54 @@
+{% extends 'main.html' %} 
+{% block content %} 
+{% if error %}
+<h2>{{error}}</h2>
+<div class="mt-4">
+  <a href="{% url 'home' %}" class="bg-gray-400 p-2 rounded-lg text-white font-sans" role="button">Back</a>
+</div>
+{% else %}
+<div class="grid grid-cols-[3fr_1fr]">
+  <div class="room-col">
+    <h2>Room #{{room.id}}</h2>
+    <h3>{{room.name}}</h3>
+    <p class="w-[500px] border-2 bg-gray-300">{{room.description}}</p>
+    
+    <div class="comment-wrapper">
+      <h3>Conversations</h3>
+      {% for message in room_messages %}
+      <div class="message">
+        <small class="message-author">@{{message.user}}  {{message.created_at|timesince}} ago</small>
+        <p class="message-text">{{message.body}}</p>
+        {% if message.user == user %}
+        <a href="{% url 'delete-message' message.id %}">Remove Msg</a>
+        <a href="{% url 'update-message' message.id %}">Update Msg</a>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% if user.is_authenticated %}
+      <div class="comment-form mt-4">
+        <form method="POST" action="" class="flex gap-x-3">
+          {% csrf_token %}
+          <input type="text" name="body" id="message" placeholder="Write your message here..."></in>
+          <button type="submit" class="self-end bg-gray-800 text-white p-2 rounded-lg font-sans">Send</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="participants">
+    <h3>Participants</h3>
+    <hr />
+    <ul>
+      {% for participant in participants %}
+      <li>
+        <a href="">@{{participant.username}}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>   
+</div>
+
+{% endif %}
+
+{% endblock %}

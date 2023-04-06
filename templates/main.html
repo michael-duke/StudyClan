@@ -1,25 +1,28 @@
-{% load static tailwind_tags %}
+{% load static %}
+{% load static tailwind_tags %} 
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>StudyClan</title>
-    {% tailwind_css %}
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <title>StudyBuddy - Find study partners around the world!</title>
   </head>
-  <body class="bg-gray-50 font-serif leading-normal tracking-normal">
-    {% include 'navbar.html' %}
-    {% if messages %}
-      <ul class="messages">
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-{% endif %}
-    <div class="container mx-auto">
+  {% tailwind_css %}
+  <body>
+    {% include 'navbar.html' %} {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    <div>
       {% block content %} 
       {% endblock %}
     </div>
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>
