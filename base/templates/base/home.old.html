@@ -1,0 +1,16 @@
+{% extends 'main.html' %} 
+{% block content %}
+<div class="home-container grid grid-cols-[1fr_3fr_1fr] mt-4 gap-x-8">
+  <div class="topics-container flex flex-col gap-y-2">
+    {% include 'base/topics.html' %}
+  </div>
+  <div class="room-section">
+    <h5>{{room_count}} rooms available.</h5>
+    <a href="{% url 'create-room' %}">Create Room</a>
+    {% include 'base/feed.html' %}
+  </div>
+  <div class="activity-feed">
+   {% include 'base/activity.html' %}
+  </div>
+</div>
+{% endblock %}
