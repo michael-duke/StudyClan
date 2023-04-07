@@ -3,11 +3,9 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
-from .models import Room, Topic, Message
-from .forms import RoomForm, MessageForm, UserForm
+from .models import Room, Topic, Message, User
+from .forms import RoomForm, MessageForm, UserForm, CreateUserForm
 # Create your views here.
 
 # rooms = [
@@ -22,20 +20,20 @@ def loginPage(request):
         return redirect('home')
     
     if request.method == 'POST':
-        username = request.POST.get('username').lower()
+        email = request.POST.get('email').lower()
         password = request.POST.get('password')
 
         try: 
-            user = User.objects.get(username=username)
+            user = User.objects.get(email=email)
         except User.DoesNotExist:
             messages.error(request, 'User does not exist')
             return redirect('login')
-        user = authenticate(request, username=username, password=password)    
+        user = authenticate(request, email=email, password=password)    
         if user is not None:
             login(request, user)
             return redirect('home')
         else:
-            messages.error(request, 'Username or password is incorrect')
+            messages.error(request, user)
     context = {'page': page}
     return render(request, 'base/login_register.html', context)
 
@@ -44,16 +42,17 @@ def logoutUser(request):
     return redirect('home')
 
 def registerPage(request):
-    form = UserCreationForm()
+    form = CreateUserForm()
     if request.user.is_authenticated:
         messages.info(request, 'You are already logged in')
         return redirect('home')
     
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CreateUserForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
             user.username = user.username.lower()
+            print(user)
             user.save()
             login(request, user)
             return redirect('home')
@@ -199,7 +198,7 @@ def updateUser(request):
     user = request.user
     form = UserForm(instance=user)
     if request.method == 'POST':
-        form = UserForm(request.POST, instance=user)
+        form = UserForm(request.POST, request.FILES, instance=user)
         if form.is_valid():
             update_user = form.save(commit=False)
             update_user.username = update_user.username.lower()
