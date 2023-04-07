@@ -15,12 +15,12 @@
         <form class="form" action="" method="POST">
           {% csrf_token %}
           <div class="form__group form__group">
-            <label for="room_name">Username</label>
+            <label for="email">Email</label>
             <input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="e.g. dennis_ivy"
+              id="email"
+              name="email"
+              type="email"
+              placeholder="e.g. dennis@ivy.com"
             />
           </div>
           <div class="form__group">

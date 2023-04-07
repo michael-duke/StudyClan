@@ -1,0 +1,31 @@
+<h1> Django API test</h1>
+
+<div id="room-container">
+
+</div>
+
+<script>
+  const roomContainer = document.getElementById("room-container");
+  const baseUrl = "http://localhost:8000/api/v1/rooms";
+
+  const getRoom = async () => {
+    const response = await fetch(baseUrl);
+    const roooms = await response.json();
+    return roooms;
+  };
+
+  const paintRooms = (rooms) => {
+    rooms.forEach((room) => {
+      const roomElement = document.createElement("div");
+      roomElement.innerText = room.name;
+      roomContainer.appendChild(roomElement);
+    });
+  };
+
+  const init = async () => {
+    const rooms = await getRoom();
+    paintRooms(rooms);
+  };
+
+  init();
+</script>
